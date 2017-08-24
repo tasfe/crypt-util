@@ -1,7 +1,6 @@
 package com.zouguoluguo.crypt;
 
-import java.util.Arrays;
-import java.util.Random;
+import com.zouguoluguo.crypt.core.type.MobileCryptService;
 
 /**
  * 实现描述：
@@ -12,14 +11,10 @@ import java.util.Random;
  * @since 2017/8/19
  */
 public class Main {
+
     public static void main(String[] args) {
-        String s = "15201328863";
-        System.out.println(s.hashCode()+Integer.MAX_VALUE);
+        MobileCryptService mcs = MobileCryptService.getInstance();
 
-        Random r = new Random(15201328863L);
-
-        System.out.println(r.nextInt());
-
-        System.out.println((1<<31)-1);
+        System.out.println(mcs.decryptMobile(mcs.encryptMobile("15201328863")));
     }
 }
