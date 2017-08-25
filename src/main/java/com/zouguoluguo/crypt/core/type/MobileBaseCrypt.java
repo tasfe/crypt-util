@@ -1,6 +1,6 @@
 package com.zouguoluguo.crypt.core.type;
 
-import com.zouguoluguo.crypt.core.base.CryptService;
+import com.zouguoluguo.crypt.core.base.BaseCrypt;
 import com.zouguoluguo.crypt.support.CryptException;
 import com.zouguoluguo.crypt.support.NumberUtil;
 import com.zouguoluguo.crypt.support.PreconditionUtil;
@@ -13,16 +13,17 @@ import com.zouguoluguo.crypt.support.PreconditionUtil;
  * @see
  * @since 2017/8/24
  */
-public class MobileCryptService extends CryptService{
+public class MobileBaseCrypt extends BaseCrypt {
     private static class ServiceHolder{
-        private static final MobileCryptService mcs = new MobileCryptService();
+        private static final MobileBaseCrypt mcs = new MobileBaseCrypt();
     }
 
     private static final int mobile_count = 11;
+    private static final String mask_code="****";
 
-    private MobileCryptService(){}
+    private MobileBaseCrypt(){}
 
-    public static MobileCryptService getInstance(){
+    public static MobileBaseCrypt getInstance(){
         return ServiceHolder.mcs;
     }
 
@@ -100,21 +101,33 @@ public class MobileCryptService extends CryptService{
      * @param decryMobile
      * @return
      */
-    public String encryptMobile(String decryMobile){
-        if (isEncryMobile(decryMobile)){
+    @Override
+    public String encry(String decryMobile){
+        if (isEncry(decryMobile)){
             return decryMobile;
         }
 
         return getPreStr(decryMobile)+encrypNumStr(decryMobile)+getTailStr(decryMobile);
     }
 
-    private boolean isEncryMobile(String encryMobile){
+    /**
+     * 判断是否加密
+     * @param encryMobile
+     * @return
+     */
+    @Override
+    public boolean isEncry(String encryMobile){
         checkEncry(encryMobile);
 
         return NumberUtil.isNumber(getPreStr(encryMobile)) && !NumberUtil.isNumber(getEncryPart(encryMobile))
                 && NumberUtil.isNumber(getTailStr(encryMobile));
     }
 
+    /**
+     * 判读是否解密
+     * @param decryMobile
+     * @return
+     */
     private boolean isDecryMobile(String decryMobile){
         checkDecry(decryMobile);
 
@@ -128,11 +141,24 @@ public class MobileCryptService extends CryptService{
      * @param encryMobile
      * @return
      */
-    public String decryptMobile(String encryMobile){
+    @Override
+    public String decry(String encryMobile){
         if (isDecryMobile(encryMobile)){
             return encryMobile;
         }
 
         return getPreStr(encryMobile)+decryptNumStr(encryMobile)+getTailStr(encryMobile);
+    }
+
+    /**
+     * mask
+     * @param mobile
+     * @return
+     */
+    @Override
+    public String mask(String mobile){
+        baseCheck(mobile);
+
+        return getPreStr(mobile) + mask_code + getTailStr(mobile);
     }
 }

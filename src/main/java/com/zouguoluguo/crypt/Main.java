@@ -1,6 +1,6 @@
 package com.zouguoluguo.crypt;
 
-import com.zouguoluguo.crypt.core.type.MobileCryptService;
+import com.zouguoluguo.crypt.core.type.MobileBaseCrypt;
 
 /**
  * 实现描述：
@@ -13,7 +13,7 @@ import com.zouguoluguo.crypt.core.type.MobileCryptService;
 public class Main {
 
     public static void main(String[] args) {
-        MobileCryptService mcs = MobileCryptService.getInstance();
+        MobileBaseCrypt mcs = MobileBaseCrypt.getInstance();
 
         System.out.println(mcs.decryptMobile(mcs.encryptMobile("15201328863")));
     }

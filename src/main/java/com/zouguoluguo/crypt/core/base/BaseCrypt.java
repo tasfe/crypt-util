@@ -14,7 +14,7 @@ import java.util.*;
  * @see
  * @since 2017/8/21
  */
-public abstract class CryptService {
+public abstract class BaseCrypt implements Crypt{
     protected static final long mask = 9989071L;
 
     //需要打乱顺序
